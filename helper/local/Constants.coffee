@@ -63,6 +63,9 @@ exports.log = (section) ->
   logger.info "Creating section child: #{section}"
   logger.child section: section
 
+exports.trello =
+  appkey:  'c123d12b6afd39d86af870f700f9f31f'
+  secret:  'f93cd85a1d1134df737219d00428eaf259a3fd1ee3033b2d066de6e487377745'
 
 Number::format = ->
   @toFixed(2).replace /\d(?=(\d{3})+\.)/g, '$&,'
