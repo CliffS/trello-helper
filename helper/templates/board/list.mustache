@@ -17,13 +17,16 @@
       </tr>
       {{#boards}}
       <tr>
-        <td><a href="https://trello.com/b/{{id}}" target="trello">{{name}}</a></td>
+        <td>
+          {{#starred}}<span class="glyphicon glyphicon-star-empty"></span>{{/starred}}
+          <a href="{{shortUrl}}" target="trello">{{name}}</a>
+        </td>
         <td><samp>{{id}} </samp>
           <a href="/board/detail/{{id}}" class="normal">
             <span class="glyphicon glyphicon-open"></span>
           </a>
         </td>
-        <td><a href="https://trello.com/{{organization.name}}">{{organization.displayName}}</a></td>
+        <td><a href="{{organization.url}}">{{organization.displayName}}</a></td>
         <td><samp>{{organization.id}}</samp></td>
       </tr>
       {{/boards}}
