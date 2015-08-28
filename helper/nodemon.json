@@ -1,0 +1,9 @@
+{
+    "verbose": false,
+    "ignore": [
+        "compiled/",
+        "js/",
+        ".*.sw?"
+    ],
+    "ext": "coffee mustache"
+}

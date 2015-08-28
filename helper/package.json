@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/CliffS/trello-helper#readme",
   "dependencies": {
+    "async": "^1.4.2",
     "bunyan": "^1.4.0",
     "coffee-script": "^1.9.3",
     "esrever": "^0.2.0",

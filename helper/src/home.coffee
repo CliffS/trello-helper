@@ -11,7 +11,7 @@ authorizeURL = "https://trello.com/1/OAuthAuthorizeToken"
 secrets = {}
 
 exports.index = (state, callback) ->
-  location = if state.session.user?.token then '/boards' else '/home/login'
+  location = if state.session.user?.token then '/board/list' else '/home/login'
   callback 'redirect', location
 
 exports.login = (state, callback) ->
@@ -30,16 +30,20 @@ exports.cb = (state, callback) ->
   oauth = new OAuth requestURL, accessURL, \
           Constants.trello.appkey, Constants.trello.secret, \
           '1.0', undefined, 'HMAC-SHA1'
-  console.log 'CALLBACK', state
   query = state.query
   token = query.oauth_token
   tokenSecret = secrets[token]
   verifier = query.oauth_verifier
   oauth.getOAuthAccessToken token, tokenSecret, verifier, \
     (err, accessToken, accessTokenSecret, results) ->
-      throw err if err
+      console.log err if err
+      throw new Error JSON.stringify err if err
       delete secrets[token]
       User.fetch accessToken
       .on 'ready', (user) ->
         state.session.user = user
-        callback 'redirect', '/boards'
+        callback 'redirect', '/board/list'
+
+exports.logoff = (state, callback) ->
+  delete state.session.user
+  callback 'redirect', '/'

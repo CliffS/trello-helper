@@ -23,5 +23,8 @@ class User extends EventEmitter
       ee.emit 'ready', user
     ee
 
+  can: (role) ->
+    true
+
 
 module.exports = User

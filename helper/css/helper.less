@@ -1,0 +1,48 @@
+.outline(@colour: red) {
+    outline: 1px solid @colour;
+}
+
+.outline {
+    .outline;
+}
+
+body {
+    padding-top : 50px; // For the navbar
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+.right {
+    text-align : right;
+}
+
+.centre {
+    text-align: center;
+}
+
+th small {
+    font-style : italic;
+    font-weight : normal;
+
+    &:before {
+        content : '(';
+    }
+
+    &:after {
+        content : ')';
+    }
+}
+
+a.normal {
+    color : #333;
+
+    &:hover {
+        text-decoration : none;
+    }
+}
+
+samp {
+    font-weight : bold;
+}

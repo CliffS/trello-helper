@@ -1,18 +1,8 @@
 
 NAVIGATION = [
-  label: 'SMS List'
-  name:  'Current SMS List'
-  url:   '/sms/list'
-  role:  'agent'
-,
-  label: 'Send SMS'
-  name:  'Send Bulk SMS'
-  url:   '/sendsms'
-  role:  'admin'
-,
-  label: 'User List'
-  name:  'Show User List'
-  url:   '/user/list'
+  label: 'Boards'
+  name:  'List Boards'
+  url:   '/board/list'
   role:  'user'
 ]
 
