@@ -1,0 +1,31 @@
+{
+  "name": "trello-helper",
+  "version": "0.1.0",
+  "description": "Website to help with the Trello API",
+  "main": "server.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CliffS/trello-helper.git"
+  },
+  "author": "Cliff Stanford",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/CliffS/trello-helper/issues"
+  },
+  "homepage": "https://github.com/CliffS/trello-helper#readme",
+  "dependencies": {
+    "bunyan": "^1.4.0",
+    "coffee-script": "^1.9.3",
+    "esrever": "^0.2.0",
+    "etag": "^1.7.0",
+    "htmlentities": "^1.0.0",
+    "less": "^2.5.1",
+    "mime-types": "^2.1.5",
+    "mustache": "^2.1.3",
+    "session-memcached": "^0.2.3",
+    "socket.io": "^1.3.6"
+  }
+}
