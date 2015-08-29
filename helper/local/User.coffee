@@ -16,7 +16,9 @@ class User extends EventEmitter
       return process.nextTick =>
         ee.emit 'error', "Missing token"
     trello = new Trello Constants.trello.appkey, token
-    trello.get "/1/members/me", (err, data) =>
+    trello.get "/1/members/me",
+      tokens: 'all'
+    , (err, data) =>
       return ee.emit 'error', err if err
       user = new @ data
       user.token = token

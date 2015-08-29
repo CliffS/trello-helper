@@ -24,7 +24,7 @@ exports.list = (state, callback) ->
         board_fields: 'name,desc,descData,idOrganization,shortUrl,starred'
       , callback
     , (err, results) ->
-      throw err if err
+      return callback 'redirect', '/home/logoff' if err?.statusCode is 401
       callback # 'debug',
         results: [
           type: 'Open'

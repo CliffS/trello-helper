@@ -24,7 +24,7 @@ exports.login = (state, callback) ->
     throw err if err
     secrets[token] = tokenSecret
     callback 'redirect',
-      "#{authorizeURL}?oauth_token=#{token}&name=#{Constants.brand}&expiration=1day"
+      "#{authorizeURL}?oauth_token=#{token}&name=#{Constants.brand}&expiration=1day&scope=read"
 
 exports.cb = (state, callback) ->
   oauth = new OAuth requestURL, accessURL, \
@@ -45,5 +45,10 @@ exports.cb = (state, callback) ->
         callback 'redirect', '/board/list'
 
 exports.logoff = (state, callback) ->
+#  token = state.session.user?.token
+#  if token
+#    trello = new Trello Constants.trello.appkey, token
+#    trello.del "/1/tokens/#{token}", (err, data) ->
+#      console.log "DELETE", err, data
   delete state.session.user
   callback 'redirect', '/'
