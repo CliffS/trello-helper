@@ -21,7 +21,7 @@ exports.live = LIVE
 exports.isLive = do (LIVE) ->
   LIVE is 'live'
 
-suite = 'helper'
+suite = 'trello.click'
 exports.socket =
   switch LIVE
     when 'live', 'proof'
