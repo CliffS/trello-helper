@@ -8,6 +8,7 @@ esrever = require 'esrever'
 Bunyan = require 'bunyan'
 Entities = require 'htmlentities'
 Path = require 'path'
+argv = require('yargs').argv
 
 exports.io = do require 'socket.io'
 
@@ -64,8 +65,8 @@ exports.log = (section) ->
   logger.child section: section
 
 exports.trello =
-  appkey:  process.env.TRELLO_KEY
-  secret:  process.env.TRELLO_SECRET
+  appkey:  process.env.TRELLO_KEY ? argv.key
+  secret:  process.env.TRELLO_SECRET ? argv.secret
 
 Number::format = ->
   @toFixed(2).replace /\d(?=(\d{3})+\.)/g, '$&,'
