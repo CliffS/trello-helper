@@ -48,6 +48,7 @@ exports.detail = (state, callback) ->
     checklist_fields: 'all'
     fields: 'name,desc,descData,closed,shortUrl'
   , (err, data) ->
+    return callback 'redirect', '/home/logoff' if err?.statusCode is 401
     cards = {}
     cards[card.id] = card for card in data.cards
     label.uses = undefined for label in data.labels when label.uses is -1

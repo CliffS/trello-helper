@@ -7,6 +7,7 @@ exports.heading = "Trello Web Hooks"
 
 exports.index = (state, callback) ->
   token = state.session.user?.token
+  console.log "real token: #{token}"
   token = '2b840d713da9970313d189f3a2b30af660c06fef21cb8617e40b34fffa5f05a0'
   return callback 'redirect', '/' unless token
   trello = new Trello Constants.trello.appkey, state.session.user.token

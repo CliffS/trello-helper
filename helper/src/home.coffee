@@ -40,8 +40,9 @@ exports.cb = (state, callback) ->
   oauth.getOAuthAccessToken token, tokenSecret, verifier, \
     (err, accessToken, accessTokenSecret, results) ->
       console.log err if err
-      return callback 'redirect', '/' if err
       delete secrets[token]
+      return callback 'redirect', '/' if err
+      console.log accessToken
       User.fetch accessToken
       .on 'ready', (user) ->
         state.session.user = user

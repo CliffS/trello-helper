@@ -90,7 +90,7 @@ server.on 'request', (req, res) ->
         res.end "#{urlPath}: path not found"
         return
       [filename, routine, params...] = match
-      routine = 'index' unless routine?
+      routine ?= 'index'
       module = src[filename]
       unless typeof module?[routine] is 'function'
         res.writeHead 404
