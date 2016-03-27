@@ -14,20 +14,28 @@ exports.sort = (state, callback) ->
   trello = new Trello Constants.trello.appkey, state.session.user.token
   trello.get "/1/members/me",
     boards: 'open'
-    board_fields: 'name,desc,descData,idOrganization,shortUrl,starred'
+    board_fields: 'name,desc,descData,idOrganization,shortUrl,starred,prefs'
   , (err, result) ->
     return callback 'redirect', '/home/logoff' if err?.statusCode is 401
-    unless result.boards.length is 0
-      board = result.boards[0]
-      board.active = true
-      trello.get "/1/boards/#{board.id}",
-        lists: 'open'
-      , (err, data) ->
-        return callback 'redirect', '/home/logoff' if err?.statusCode is 401
-        callback # 'debug',
-          boards: result.boards
-          lists: data.lists
-          include: 'tricks'
+    return callback 'redirect', '/' if result.boards.length is 0
+    for b in result.boards
+      image = b.prefs.backgroundImageScaled?[1].url ? b.prefs.backgroundImage
+      b.style = if image?
+        "background-image:url('#{image}');"
+      else
+        "background-color:#{b.prefs.backgroundColor}"
+    board = result.boards[0]
+    board.active = true
+    trello.get "/1/boards/#{board.id}",
+      lists: 'open'
+    , (err, data) ->
+      return callback 'redirect', '/home/logoff' if err?.statusCode is 401
+      callback (if state.query.debug then 'debug' else 'render'),
+        boards: result.boards
+        lists: data.lists
+        include: 'tricks'       # coffee file to include
+        board: board
+        list: data.lists[0]
 
   io = Constants.io.of '/tricks'
   io.on 'connection', (socket) ->
@@ -38,17 +46,16 @@ exports.sort = (state, callback) ->
       , (err, data) ->
         return socket.emit 'redirect', '/home/logoff' if err?.statusCode is 401
         socket.emit 'lists', data.lists
-        console.log data.lists
+    socket.on 'list-chosen', (id) ->
+      trello.get "/1/list/#{id}",
+        cards: 'open'
+        board: true
+        board_fields: 'name,shortUrl'
+        fields: 'name,pos'
+      , (err, list) ->
+        return socket.emit 'redirect', '/home/logoff' if err?.statusCode is 401
+        list.cards = list.cards.length
+        socket.emit 'list-selected', list
+        state.session.list = list
+        do state.session.save
 
-exports.sorter = (state, callback) ->
-  [ board, list ] = state.params
-  trello = new Trello Constants.trello.appkey, state.session.user.token
-  trello.get "/1/list/#{list}",
-    cards: 'open'
-    card_fields: 'dateLastActivity,name,desc,due'
-    board: true
-    board_fields: 'name'
-    fields: 'name'
-  , (err, data) ->
-      return callback 'redirect', '/home/logoff' if err?.statusCode is 401
-      callback 'debug', data

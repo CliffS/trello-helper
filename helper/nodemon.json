@@ -5,5 +5,5 @@
         "js/",
         ".*.sw?"
     ],
-    "ext": "coffee mustache"
+    "ext": "coffee mustache less"
 }

@@ -1,24 +1,21 @@
 {{>header}}
 <div class="row">
-  <div class="col-sm-5">
+  <div class="col-sm-8">
     <h2>Select a board</h2>
-    <ul class="nav nav-pills nav-stacked">
+    <ul class="boards">
     {{#boards}}
-    <li role="presentation"{{#active}} class="active"{{/active}}>
+    <li style="{{{style}}}"{{#active}} class="active"{{/active}}>
     <a href="{{id}}" class="select-board">
     {{#starred}}
     <span class="glyphicon glyphicon-star-empty"></span>
     {{/starred}}
-    {{^starred}}
-    <span class="glyphicon glyphicon-none"></span>
-    {{/starred}}
-      {{name}}
+    {{name}}
     </a>
     </li>
     {{/boards}}
     </ul>
   </div>
-  <div class="col-sm-5 col-sm-offset-1">
+  <div class="col-sm-4">
     <h2>Select a list</h2>
     <ul class="nav nav-pills nav-stacked" id="lists">
       {{#lists}}
@@ -28,4 +25,64 @@
       {{/lists}}
     </ul>
   </div>
+</div>
+<div class="modal fade" id="sort-modal" tabindex="-1" role=dialog">
+  <form>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Sort list</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-4 right bold">Board</div>
+          <div class="col-sm-8" id="board-name">
+            {{board.name}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 right bold">List</div>
+          <div class="col-sm-8" id="list-name">
+            {{list.name}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 right bold">Number of cards</div>
+          <div class="col-sm-8" id="card-count">
+            {{list.cards}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 right bold">Sort criterion</div>
+          <div class="col-sm-8" id="card-count">
+            <select class="form-control" id="criterion" name="criterion">
+              <option value="name">By card name</option>
+              <option value="activity">By last activity</option>
+              <option value="due">By due date (blank to the top)</option>
+              <option value="dueBottom">By due date (blank to the bottom)</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 right bold">Sort order</div>
+          <div class="col-sm-4" id="card-count">
+            <select class="form-control" id="order" name="order">
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group">
+          <a href="#" target="trello" class="btn btn-primary" id="open">
+            Open board in Trello
+          </a>
+          <button type="button" class="btn btn-inverse">Cancel</button>
+          <button type="submit" class="btn btn-primary">Sort</button>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
