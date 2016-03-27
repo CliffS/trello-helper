@@ -1,41 +1,38 @@
 {{>header}}
-<div class="container theme-showcase" role="main">
-  <h1>{{heading}}</h1>
-  {{#results}}
-  <div class="row">
-    <div class="col-sm-12">
-      <h2>{{type}} boards</h2>
-      <table class="table table-bordered table-hover">
-        <tr>
-          <th>Name <small>click to view board</small></th>
-          <th>ID
-            <small>click
-              <span class="glyphicon glyphicon-open"></span>
-              to view details
-            </small>
-          </th>
-          <th>Organisation <small>click to view org.</small></th>
-          <th>Org. ID</th>
-        </tr>
-        {{#boards}}
-        <tr>
-          <td>
-            {{#starred}}<span class="glyphicon glyphicon-star-empty"></span>{{/starred}}
-            <a href="{{shortUrl}}" target="trello">{{name}}</a>
-          </td>
-          <td><samp>{{id}} </samp>
-            <a href="/board/detail/{{id}}" class="normal">
-              <span class="glyphicon glyphicon-open"></span>
-            </a>
-          </td>
-          <td><a href="{{organization.url}}">{{organization.displayName}}</a></td>
-          <td><samp>{{organization.id}}</samp></td>
-        </tr>
-        {{/boards}}
-      </table>
-    </div>
+{{#results}}
+<div class="row">
+  <div class="col-sm-12">
+    <h2>{{type}} boards</h2>
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th>Name <small>click to view board</small></th>
+        <th>ID
+          <small>click
+            <span class="glyphicon glyphicon-open"></span>
+            to view details
+          </small>
+        </th>
+        <th>Organisation <small>click to view org.</small></th>
+        <th>Org. ID</th>
+      </tr>
+      {{#boards}}
+      <tr>
+        <td>
+          {{#starred}}<span class="glyphicon glyphicon-star-empty"></span>{{/starred}}
+          <a href="{{shortUrl}}" target="trello">{{name}}</a>
+        </td>
+        <td><samp>{{id}} </samp>
+          <a href="/board/detail/{{id}}" class="normal">
+            <span class="glyphicon glyphicon-open"></span>
+          </a>
+        </td>
+        <td><a href="{{organization.url}}">{{organization.displayName}}</a></td>
+        <td><samp>{{organization.id}}</samp></td>
+      </tr>
+      {{/boards}}
+    </table>
   </div>
-  {{/results}}
-</div>{{! container }}
+</div>
+{{/results}}
 {{>footer}}
 

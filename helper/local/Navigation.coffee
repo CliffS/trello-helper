@@ -1,14 +1,14 @@
 
 NAVIGATION = [
-  label: 'Boards'
-  name:  'List Boards'
-  url:   '/board/list'
-  group: '/board'
+  label: 'Tricks'
+  name:  'Useful tricks'
+  url:   '/tricks'
   role:  'user'
 ,
-  label: 'Webhooks'
-  name:  'Trello Webhooks'
-  url:   '/webhook'
+  label: 'Board IDs'
+  name:  'List board IDs'
+  url:   '/board/list'
+  group: '/board'
   role:  'user'
 ]
 

@@ -15,7 +15,7 @@ exports.index = (state, callback) ->
     callback 'redirect', '/board/list'
   else
     callback
-      heading: 'Trello Helper'
+      heading: ''
       nav: ''
 
 exports.login = (state, callback) ->

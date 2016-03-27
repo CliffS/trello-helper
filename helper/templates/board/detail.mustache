@@ -1,82 +1,79 @@
 {{>header}}
-<div class="container theme-showcase" role="main">
-  <h1>{{heading}}</h1>
-  {{#board}}
-  <div class="row">
-    <div class="col-sm-12">
-      <h2>Board:
-        <a href="{{shortUrl}}" target="trello">{{name}}</a>
-        {{#closed}} <small>(Closed)</small>{{/closed}}
-      </h2>
-    </div>
+{{#board}}
+<div class="row">
+  <div class="col-sm-12">
+    <h2>Board:
+      <a href="{{shortUrl}}" target="trello">{{name}}</a>
+      {{#closed}} <small>(Closed)</small>{{/closed}}
+    </h2>
   </div>
-  <div class="row">
-    <div class="col-md-6 col-xs-12">
-      <h3>Lists</h3>
-      <table class="table table-bordered table-hover">
-        <tr>
-          <th>Name</th>
-          <th>ID</th>
-          <th>Archived</th>
-        </tr>
-        {{#lists}}
-        <tr{{#closed}} class="danger"{{/closed}}>
-          <td>{{name}}</td>
-          <td><samp>{{id}}</samp></td>
-          <td>{{#closed}}true{{/closed}}</td>
-        </tr>
-        {{/lists}}
-      </table>
-    </div>
-    <div class="col-md-6 col-xs-12">
-      <h3>Labels</h3>
-      <table class="table table-bordered table-hover">
-        <tr>
-          <th>Name</th>
-          <th>ID</th>
-          <th class="centre">Colour</th>
-          <th class="right">Used</th>
-        </tr>
-        {{#labels}}
-        <tr>
-          <td>{{name}}</td>
-          <td><samp>{{id}}</samp></td>
-          <td style="background-color:{{color}}" class="card-label">{{color}}</td>
-          <td class="right">{{uses}}</td>
-        </tr>
-        {{/labels}}
-      </table>
-    </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-xs-12">
+    <h3>Lists</h3>
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th>Name</th>
+        <th>ID</th>
+        <th>Archived</th>
+      </tr>
+      {{#lists}}
+      <tr{{#closed}} class="danger"{{/closed}}>
+        <td>{{name}}</td>
+        <td><samp>{{id}}</samp></td>
+        <td>{{#closed}}true{{/closed}}</td>
+      </tr>
+      {{/lists}}
+    </table>
   </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h3>Checklists</h3>
-      <table class="table table-bordered table-hover">
-        <tr>
-          <th>Name</th>
-          <th>ID</th>
-          <th>Card</th>
-          <th>Card ID</th>
-          <th>Items</th>
-        </tr>
-        {{#checklists}}
-        <tr{{#card.closed}} class="danger"{{/card.closed}}>
-          <td>{{name}}</td>
-          <td><samp>{{id}}</samp></td>
-          <td><a href="{{card.shortUrl}}" target="trello">{{card.name}}</a></td>
-          <td><samp>{{idCard}}</samp></td>
-          <td>
-            <ul>
-              {{#checkItems}}
-              <li class="{{state}}">{{name}}</li>
-              {{/checkItems}}
-            </ul>
-          </td>
-        </tr>
-        {{/checklists}}
-      </table>
-    </div>
+  <div class="col-md-6 col-xs-12">
+    <h3>Labels</h3>
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th>Name</th>
+        <th>ID</th>
+        <th class="centre">Colour</th>
+        <th class="right">Used</th>
+      </tr>
+      {{#labels}}
+      <tr>
+        <td>{{name}}</td>
+        <td><samp>{{id}}</samp></td>
+        <td style="background-color:{{color}}" class="card-label">{{color}}</td>
+        <td class="right">{{uses}}</td>
+      </tr>
+      {{/labels}}
+    </table>
   </div>
-  {{/board}}
-</div>{{! container }}
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Checklists</h3>
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th>Name</th>
+        <th>ID</th>
+        <th>Card</th>
+        <th>Card ID</th>
+        <th>Items</th>
+      </tr>
+      {{#checklists}}
+      <tr{{#card.closed}} class="danger"{{/card.closed}}>
+        <td>{{name}}</td>
+        <td><samp>{{id}}</samp></td>
+        <td><a href="{{card.shortUrl}}" target="trello">{{card.name}}</a></td>
+        <td><samp>{{idCard}}</samp></td>
+        <td>
+          <ul>
+            {{#checkItems}}
+            <li class="{{state}}">{{name}}</li>
+            {{/checkItems}}
+          </ul>
+        </td>
+      </tr>
+      {{/checklists}}
+    </table>
+  </div>
+</div>
+{{/board}}
 {{>footer}}

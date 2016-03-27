@@ -1,0 +1,31 @@
+{{>header}}
+<div class="row">
+  <div class="col-sm-5">
+    <h2>Select a board</h2>
+    <ul class="nav nav-pills nav-stacked">
+    {{#boards}}
+    <li role="presentation"{{#active}} class="active"{{/active}}>
+    <a href="{{id}}" class="select-board">
+    {{#starred}}
+    <span class="glyphicon glyphicon-star-empty"></span>
+    {{/starred}}
+    {{^starred}}
+    <span class="glyphicon glyphicon-none"></span>
+    {{/starred}}
+      {{name}}
+    </a>
+    </li>
+    {{/boards}}
+    </ul>
+  </div>
+  <div class="col-sm-5 col-sm-offset-1">
+    <h2>Select a list</h2>
+    <ul class="nav nav-pills nav-stacked" id="lists">
+      {{#lists}}
+      <li>
+      <a href="{{id}}" class="select-list">{{name}}</a>
+      </li>
+      {{/lists}}
+    </ul>
+  </div>
+</div>

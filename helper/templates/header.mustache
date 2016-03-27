@@ -19,10 +19,10 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     {{#js}}
-    <script src="/client-side/{{{.}}}.js"></script>
+    <script src="/js/{{{.}}}.js"></script>
     {{/js}}
     {{#include}}
-    <script src="/client-side/{{{.}}}.coffee"></script>
+    <script src="/js/{{{.}}}.coffee"></script>
     {{/include}}
   </head>
   <body role="document" style="background-color: {{background_colour}};">
@@ -64,4 +64,9 @@
         </div>{{!/.nav-collapse }}
       </div>
     </div>
+    {{#heading}}{{! Only open the container if there's a heading }}
+    <div class="container theme-showcase" role="main">
+      <h1>{{heading}}</h1>
+    {{/heading}}
+
 
