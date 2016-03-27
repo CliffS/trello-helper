@@ -68,11 +68,6 @@ exports.trello =
   appkey:  process.env.TRELLO_KEY ? argv.key
   secret:  process.env.TRELLO_SECRET ? argv.secret
 
-console.log """
-  key=#{exports.trello.appkey}
-  secret=#{exports.trello.secret}
-  """
-
 Number::format = ->
   @toFixed(2).replace /\d(?=(\d{3})+\.)/g, '$&,'
 

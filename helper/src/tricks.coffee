@@ -13,6 +13,7 @@ exports.index = (state, callback) ->
 
 exports.sort = (state, callback) ->
   return callback 'redirect', '/home/logoff' unless state.session.user?.token
+  @heading = "Trello tricks: sort cards in a list"
   trello = new Trello Constants.trello.appkey, state.session.user.token
   trello.get "/1/members/me",
     boards: 'open'
@@ -65,7 +66,7 @@ exports.sort = (state, callback) ->
     socket.on 'do-sort', (serialisedForm) ->
       form = {}
       form[f.name] = f.value for f in serialisedForm
-      console.log form
+      # console.log form
       [ lower, higher ] = if form.order is 'desc' then [ -1, 1 ] else [ 1, -1 ]
       sorter = switch form.criterion
         when 'name'
@@ -101,7 +102,7 @@ exports.sort = (state, callback) ->
           total = cards.length
           done = 1
           return socket.emit 'redirect', '/home/logoff' if err?.statusCode is 401
-          console.log cards
+          # console.log cards
           cards.sort sorter
           pushtop = ->
             limiter.removeTokens 1, (err, remaining) ->

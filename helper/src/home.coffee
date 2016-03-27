@@ -46,7 +46,7 @@ exports.cb = (state, callback) ->
       User.fetch accessToken
       .on 'ready', (user) ->
         state.session.user = user
-        callback 'redirect', '/board/list'
+        callback 'redirect', '/tricks'
 
 exports.logoff = (state, callback) ->
 #  token = state.session.user?.token
