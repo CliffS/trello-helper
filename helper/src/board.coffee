@@ -57,3 +57,14 @@ exports.detail = (state, callback) ->
       board: data
       user: state.session.user
 
+exports.cards = (state, callback) ->
+  [ board, list ] = state.params
+  trello = new Trello Constants.trello.appkey, state.session.user.token
+  trello.get "/1/list/#{list}",
+    board: true
+    board_fields: 'name,shortUrl'
+  , (err, list) ->
+    return callback 'redirect', '/home/logoff' if err?.statusCode is 401
+    # To be continued
+
+

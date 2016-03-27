@@ -14,13 +14,23 @@
     <table class="table table-bordered table-hover">
       <tr>
         <th>Name</th>
-        <th>ID</th>
+        <th>ID
+          <small>click
+            <span class="glyphicon glyphicon-credit-card"></span>
+            to view cards
+          </small>
+        </th>
         <th>Archived</th>
       </tr>
       {{#lists}}
       <tr{{#closed}} class="danger"{{/closed}}>
         <td>{{name}}</td>
-        <td><samp>{{id}}</samp></td>
+        <td>
+          <samp>{{id}} </samp>
+          <a href="/board/cards/{{board.id}}/{{id}}" class="normal">
+            <span class="glyphicon glyphicon-credit-card"></span>
+          </a>
+        </td>
         <td>{{#closed}}true{{/closed}}</td>
       </tr>
       {{/lists}}
