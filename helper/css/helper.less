@@ -80,11 +80,17 @@ li.incomplete {
     color: transparent !important;
 }
 
-.bold {
-    font-weight : bold;
+.highlight-th {
+    th {
+        text-align : right;
+        vertical-align : middle !important;
 
-    &:after {
-        content: ":"
+        &:after {
+            content: ":";
+        }
+    }
+    td {
+        vertical-align : middle;
     }
 }
 
