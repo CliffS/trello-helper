@@ -19,6 +19,7 @@ io = Constants.io
 log = Constants.log()
 
 server = http.createServer()
+process.chdir __dirname
 
 process.on 'SIGTERM', ->
   setTimeout ->
