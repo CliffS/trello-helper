@@ -9,7 +9,8 @@ limiter = new RateLimiter 80, 10 * 1000    # 100 requests in 10 secs
 exports.heading = "Trello tricks"
 
 exports.index = (state, callback) ->
-  callback {}
+  callback
+    user: state.session.user
 
 exports.sort = (state, callback) ->
   return callback 'redirect', '/home/logoff' unless state.session.user?.token
@@ -21,24 +22,31 @@ exports.sort = (state, callback) ->
   , (err, result) ->
     return callback 'redirect', '/home/logoff' if err?.statusCode is 401
     return callback 'redirect', '/' if result.boards.length is 0
-    for b in result.boards
+    boards = result.boards.sort (a, b) ->
+      if a.starred and not b.starred then -1
+      else if b.starred and not a.starred then 1
+      else if a.name < b.name then -1
+      else if a.name > b.name then 1
+      else 0
+    for b in boards
       image = b.prefs.backgroundImageScaled?[1].url ? b.prefs.backgroundImage
       b.style = if image?
         "background-image:url('#{image}');"
       else
         "background-color:#{b.prefs.backgroundColor}"
-    board = result.boards[0]
+    board = boards[0]
     board.active = true
     trello.get "/1/boards/#{board.id}",
       lists: 'open'
     , (err, data) ->
       return callback 'redirect', '/home/logoff' if err?.statusCode is 401
       callback (if state.query.debug then 'debug' else 'render'),
-        boards: result.boards
+        boards: boards
         lists: data.lists
         include: 'tricks'       # coffee file to include
         board: board
         list: data.lists[0]
+        user: state.session.user
 
   io = Constants.io.of '/tricks'
   io.on 'connection', (socket) ->
