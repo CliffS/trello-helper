@@ -24,9 +24,21 @@ $ ->
   $('#sort-modal').on 'hidden.bs.modal', (e) ->
     $('#lists .active').removeClass 'active'
 
+  $('#sort-modal').on 'show.bs.modal', (e) ->
+    $('#sort-modal .done').hide()
+    $('#sort-modal .undone').show()
+    $('#sort-modal .progress-bar').width "0%"
+    $('#sort-modal .progress-bar').addClass "active"
+    $('#sort-modal .btn').prop 'disabled', false
+    $('#sort-modal .btn').removeClass 'disabled'
+
   $('#sort-modal form').submit (e) ->
     e.preventDefault()
-    socket.emit 'do-sort', $(@).serializeArray()
+    setTimeout =>
+      socket.emit 'do-sort', $(@).serializeArray()
+    , 100
+    $('#sort-modal .done').hide()
+    $('#sort-modal .undone').show()
     $('#sort-modal .progress-bar').width "0%"
     $('#sort-modal .progress-bar').addClass "active"
     $('#sort-modal .btn').prop 'disabled', true
@@ -56,15 +68,17 @@ $ ->
     $('#card-count').html if data.cards is 0 then "None" else data.cards
     $('#sort-modal button[type="submit"]').prop 'disabled', data.cards is 0
     $('#sort-modal .progress-bar').attr 'aria-valuemax', data.cards
-#    $('form select option:first-child').prop 'selected', true
     $('#open').attr 'href', data.board.shortUrl
     $('#sort-modal').modal 'show'
   .on 'bump', (counter) ->
     $('#sort-modal .progress-bar').width "#{counter}%"
     if counter is 100
-      $('#sort-modal .progress-bar').removeClass 'active'
-      $('#sort-modal .btn').prop 'disabled', false
-      $('#sort-modal .btn').removeClass 'disabled'
-    
+      setTimeout ->
+        $('#sort-modal .progress-bar').removeClass 'active'
+        $('#sort-modal .btn').prop 'disabled', false
+        $('#sort-modal .btn').removeClass 'disabled'
+        $('#sort-modal .undone').hide()
+        $('#sort-modal .done').show()
+      , 400
 
     

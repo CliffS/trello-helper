@@ -82,11 +82,13 @@
       </div>
       <div class="modal-footer">
         <div class="btn-group">
-          <a href="#" target="trello" class="btn btn-primary" id="open">
+          <a href="#" target="trello" class="btn btn-primary undone" id="open">
             Open board in Trello
           </a>
-          <button type="button" class="btn btn-inverse" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-danger">Sort cards</button>
+          <button type="button" class="btn btn-inverse undone" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success done" data-dismiss="modal">Sorted. Close window</button>
+          <button type="submit" class="btn btn-danger undone">Sort cards</button>
+          <button type="submit" class="btn btn-danger done">Re-sort cards</button>
         </div>
       </div>
     </div>
