@@ -27,7 +27,7 @@ exports.login = (state, callback) ->
     return console.log err if err
     secrets[token] = tokenSecret
     callback 'redirect',
-      "#{authorizeURL}?oauth_token=#{token}&name=#{Constants.brand}&expiration=1day&scope=read"
+      "#{authorizeURL}?oauth_token=#{token}&name=#{Constants.brand}&expiration=1day&scope=read,write"
 
 exports.cb = (state, callback) ->
   oauth = new OAuth requestURL, accessURL, \
@@ -42,7 +42,7 @@ exports.cb = (state, callback) ->
       console.log err if err
       delete secrets[token]
       return callback 'redirect', '/' if err
-      console.log accessToken
+      console.log "token=#{accessToken}"
       User.fetch accessToken
       .on 'ready', (user) ->
         state.session.user = user

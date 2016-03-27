@@ -43,6 +43,7 @@
           <tr>
             <th>List name</th>
             <td id="list-name">{{list.name}}</td>
+            <input type="hidden" name="list_id" id="list_id" value=""/>
           </tr>
           <tr>
             <th>Number of cards</th>
@@ -53,9 +54,9 @@
             <td>
               <select class="form-control" id="criterion" name="criterion">
                 <option value="name">By card name</option>
-                <option value="activity">By last activity</option>
-                <option value="due">By due date (blank to the top)</option>
-                <option value="dueBottom">By due date (blank to the bottom)</option>
+                <option value="due">By due date</option>
+                <option value="created">By date created</option>
+                <option value="activity" disabled>By last activity</option>
               </select>
             </td>
           </tr>
@@ -68,6 +69,15 @@
               </select>
             </td>
           </tr>
+          <tr>
+            <td colspan="2">
+              <div class="progress">
+                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                  
+                </div>
+              </div>
+            </td>
+          </tr>
         </table>
       </div>
       <div class="modal-footer">
@@ -75,7 +85,7 @@
           <a href="#" target="trello" class="btn btn-primary" id="open">
             Open board in Trello
           </a>
-          <button type="button" class="btn btn-inverse" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-inverse" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-danger">Sort cards</button>
         </div>
       </div>
