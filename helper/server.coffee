@@ -19,7 +19,6 @@ io = Constants.io
 log = Constants.log()
 
 server = http.createServer()
-process.chdir __dirname
 
 process.on 'SIGTERM', ->
   setTimeout ->
@@ -53,6 +52,10 @@ server.on 'request', (req, res) ->
           return
         else
           less.render data
+            paths: [
+              __dirname
+              Path.dirname fullpath
+            ]
           .then (output) ->
             res.writeHead 200,
               'Content-Type': 'text/css; charset=utf-8'
