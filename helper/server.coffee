@@ -51,7 +51,7 @@ server.on 'request', (req, res) ->
         else if check_etag req, res, fullpath
           return
         else
-          less.render data
+          less.render data,
             paths: [
               __dirname
               Path.dirname fullpath

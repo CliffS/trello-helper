@@ -3,6 +3,10 @@ Constants = require '../local/Constants'
 User = require '../local/User'
 Trello = require 'node-trello'
 Async = require 'async'
+Mustache = require '../vendor/mustache-simple'
+Path = require 'path'
+Markdown = require 'marked'
+
 
 exports.heading = "Trello boards"
 
@@ -60,11 +64,86 @@ exports.detail = (state, callback) ->
 exports.cards = (state, callback) ->
   [ board, list ] = state.params
   trello = new Trello Constants.trello.appkey, state.session.user.token
-  trello.get "/1/list/#{list}",
-    board: true
-    board_fields: 'name,shortUrl'
-  , (err, list) ->
+  Async.parallel
+    open: (callback) ->
+      trello.get "/1/lists/#{list}",
+        cards: 'open'
+        card_fields: 'name,desc,pos,shortUrl'
+        board: true
+        board_fields: 'name'
+      , callback
+    closed: (callback) ->
+      trello.get "/1/lists/#{list}",
+        cards: 'closed'
+        card_fields: 'name,desc,pos,shortUrl'
+      , callback
+  , (err, results) ->
     return callback 'redirect', '/home/logoff' if err?.statusCode is 401
-    # To be continued
+    throw err if err
+#    callback 'debug', results
+    callback # 'debug',
+      results: [
+        type: 'Open'
+        cards: results.open.cards
+      ,
+        type: 'Archived'
+        cards: results.closed.cards
+      ]
+      user: state.session.user
+      header: "Board: #{results.open.board.name}, List: #{results.open.name}"
+      include: 'cards'
 
+  io = Constants.io.of '/board/cards'
+  io.on 'connection', (socket) ->
 
+    socket.on 'details', (id) ->
+      trello.get "/1/cards/#{id}",
+        actions: 'all'
+        actions_limit: 1000
+      , (err, card) ->
+        return socket.emit 'redirect', '/home/logoff' if err?.statusCode is 401
+        # socket.emit 'card', card
+        created = a for a in card.actions when a.type is 'createCard'
+        response =
+          id: card.id
+          fields: [
+            key: 'Name'
+            value: card.name
+          ,
+            key: 'Description'
+            value: do (desc = card.desc) ->
+#              max = 200
+#              desc = "#{desc.substr 0, max}..." if desc.length > max
+#              desc
+              Markdown desc
+          ,
+            key: 'URL'
+            value: card.url
+            url: card.shortUrl
+          ,
+            key: 'Short URL'
+            value: card.shortUrl
+            url: card.shortUrl
+          ,
+            key: 'Archived'
+            value: JSON.stringify card.closed
+          ,
+            key: 'Created'
+            value: if created then new Date(created.date).formatted()
+          ,
+            key: 'Created by'
+            value: do (who = created.memberCreator) ->
+              "#{who.fullName} (#{who.username})" if created
+          ,
+            key: 'Last active'
+            value: new Date(card.dateLastActivity).formatted()
+          ,
+            key: 'Last change'
+            value: do (action = card.actions[0]) ->
+              "#{action.type} by #{action.memberCreator.fullName}" if action
+          ]
+        mus = new Mustache
+          extension: 'mustache'
+          path: Path.join Path.dirname(__dirname), 'templates', 'board'
+        html = mus.render 'cards-details', response
+        socket.emit 'card-html', html

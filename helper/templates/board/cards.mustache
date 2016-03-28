@@ -1,0 +1,42 @@
+{{>header}}
+<div class="row">
+  <div class="col-sm-6">
+    {{#results}}
+    <h2>{{type}} cards</h2>
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th>Name
+          <small>click to view card, hover to view description</small>
+        </th>
+        <th>ID
+          <small>click
+            <span class="glyphicon glyphicon-open"></span>
+            to view details
+          </small>
+        </th>
+      </tr>
+      {{#cards}}
+      <tr>
+        <td>
+          <a title="{{desc}}" href="{{shortUrl}}" target="trello">{{name}}</a>
+        </td>
+        <td class="Xid-space"><samp class="id-space">{{id}} 
+          <a href="{{id}}" class="details normal">
+            <span class="glyphicon glyphicon-open"></span></samp>
+          </a>
+        </td>
+      </tr>
+      {{/cards}}
+    </table>
+    {{/results}}
+  </div>
+  <div class="col-sm-6">
+    <h2>Card Details</h2>
+    <div id="card-html">
+    </div>
+    <div id="temp">
+    </div>
+  </div>
+</div>
+{{>footer}}
+

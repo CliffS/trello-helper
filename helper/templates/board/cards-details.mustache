@@ -1,0 +1,15 @@
+<table class="table table-condensed">
+  <tr>
+    <th>ID</th>
+    <td><samp>{{id}}</samp></td>
+  </tr>
+  {{#fields}}
+  <tr>
+    <th style="white-space:nowrap">{{key}}</th>
+    <td>
+      {{#url}}<a href="{{url}}" target="trello">{{value}}</a>{{/url}}
+      {{^url}}{{{value}}}{{/url}}
+    </td>
+  </tr>
+  {{/fields}}
+</table>
