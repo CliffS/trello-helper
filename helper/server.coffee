@@ -5,7 +5,7 @@ URL  = require 'url'
 fs   = require 'fs'
 less = require 'less'
 mime = require 'mime-types'
-Mustache = require './vendor/mustache-simple'
+Mustache = require 'mustache-file'
 Path = require 'path'
 Session = require 'session-memcached'
 qs = require 'querystring'
@@ -140,11 +140,11 @@ server.on 'request', (req, res) ->
                 result.brand ?= Constants.brand
                 result.user ?= if currentUser.user_id? then currentUser
                 template = result.template ? routine
-                html = mus.render template, result
-                res.writeHead 200,
-                  'Content-Type': 'text/html; charset=utf-8'
-                  'X-Mustache': 'rendered'
-                res.end html
+                mus.render template, result, (html) ->
+                  res.writeHead 200,
+                    'Content-Type': 'text/html; charset=utf-8'
+                    'X-Mustache': 'rendered'
+                  res.end html
               when 'debug'
                 res.writeHead 200,
                   'Content-Type': 'text/plain; charset=utf-8'

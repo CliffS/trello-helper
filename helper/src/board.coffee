@@ -145,5 +145,6 @@ exports.cards = (state, callback) ->
         mus = new Mustache
           extension: 'mustache'
           path: Path.join Path.dirname(__dirname), 'templates', 'board'
-        html = mus.render 'cards-details', response
-        socket.emit 'card-html', html
+        mus.render 'cards-details', response, (html) ->
+          socket.emit 'card-html', html
+
